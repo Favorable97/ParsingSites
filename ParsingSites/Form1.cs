@@ -250,7 +250,7 @@ namespace ParsingSites {
                     year9.Add(match.Value.Substring(match.Value.IndexOf('>') + 1, match.Value.LastIndexOf('<') - match.Value.IndexOf('>') - 1));
                 }
             }
-            matches = regex3.Matches(table8);
+            matches = regex3.Matches(table9);
             if (matches.Count > 0) {
                 foreach (Match match in matches) {
                     richTextBox1.AppendText(match.Value.Substring(match.Value.IndexOf('>') + 1, match.Value.LastIndexOf('<') - match.Value.IndexOf('>') - 1) + ", ");
