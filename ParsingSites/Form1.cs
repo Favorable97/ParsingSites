@@ -32,8 +32,8 @@ namespace ParsingSites {
             
             Regex regex1 = new Regex(@"<td>(\w*)</td>");
             Regex regex2 = new Regex(@"<td>(\w*)\s(\w*)</td>");
-            Regex regex3 = new Regex(@"<td>(\w*),(\w*)</td>");
-            Regex regex4 = new Regex(@"<td>(\w*)\s(\w*),(\w*)</td>");
+            Regex regex3 = new Regex(@"<td>(\W*)(\w*),(\w*)</td>");
+            Regex regex4 = new Regex(@"<td>(\w*)(\s*)(\w*),(\w*)</td>");
             MatchCollection matches = regex1.Matches(table);
             if (matches.Count > 0) {
                 foreach (Match match in matches) {
@@ -193,11 +193,11 @@ namespace ParsingSites {
             }
 
             using (WebClient wc = new WebClient { Encoding = Encoding.UTF8 }) {
-                ans = wc.DownloadString("https://knoema.ru/atlas/" + country + "/topics/Образование/Высшее-образование/Валовой-показатель-охвата-Высшее-образование-МСКО-5-6");
+                ans = wc.DownloadString("https://knoema.ru/atlas/" + country + "/topics/Образование/Высшее-образование/Валовой-показатель-завершения-обучения-первая-ступень-высшего-образования-МСКО-5");
             }
             List<string> year7 = new List<string>();
             List<string> value7 = new List<string>();
-            string table7 = ans.Substring(ans.IndexOf("<table"), ans.IndexOf("</table>") - ans.IndexOf("<table"));
+            /*string table7 = ans.Substring(ans.IndexOf("<table"), ans.IndexOf("</table>") - ans.IndexOf("<table"));
 
             matches = regex1.Matches(table7);
             if (matches.Count > 0) {
@@ -212,10 +212,10 @@ namespace ParsingSites {
                     richTextBox1.AppendText(match.Value.Substring(match.Value.IndexOf('>') + 1, match.Value.LastIndexOf('<') - match.Value.IndexOf('>') - 1) + ", ");
                     value7.Add(match.Value.Substring(match.Value.IndexOf('>') + 1, match.Value.LastIndexOf('<') - match.Value.IndexOf('>') - 1));
                 }
-            }
+            }*/
 
             using (WebClient wc = new WebClient { Encoding = Encoding.UTF8 }) {
-                ans = wc.DownloadString("https://knoema.ru/atlas/" + country + "/topics/Образование/Высшее-образование/Валовой-показатель-завершения-обучения-первая-ступень-высшего-образования-МСКО-5");
+                ans = wc.DownloadString("https://knoema.ru/atlas/" + country + "/Доля-городского-насления");
             }
             List<string> year8 = new List<string>();
             List<string> value8 = new List<string>();
@@ -233,28 +233,6 @@ namespace ParsingSites {
                 foreach (Match match in matches) {
                     richTextBox1.AppendText(match.Value.Substring(match.Value.IndexOf('>') + 1, match.Value.LastIndexOf('<') - match.Value.IndexOf('>') - 1) + ", ");
                     value8.Add(match.Value.Substring(match.Value.IndexOf('>') + 1, match.Value.LastIndexOf('<') - match.Value.IndexOf('>') - 1));
-                }
-            }
-
-            using (WebClient wc = new WebClient { Encoding = Encoding.UTF8 }) {
-                ans = wc.DownloadString("https://knoema.ru/atlas/" + country + "/Доля-городского-насления");
-            }
-            List<string> year9 = new List<string>();
-            List<string> value9 = new List<string>();
-            string table9 = ans.Substring(ans.IndexOf("<table"), ans.IndexOf("</table>") - ans.IndexOf("<table"));
-
-            matches = regex1.Matches(table9);
-            if (matches.Count > 0) {
-                foreach (Match match in matches) {
-                    richTextBox1.AppendText(match.Value.Substring(match.Value.IndexOf('>') + 1, match.Value.LastIndexOf('<') - match.Value.IndexOf('>') - 1) + ", ");
-                    year9.Add(match.Value.Substring(match.Value.IndexOf('>') + 1, match.Value.LastIndexOf('<') - match.Value.IndexOf('>') - 1));
-                }
-            }
-            matches = regex3.Matches(table9);
-            if (matches.Count > 0) {
-                foreach (Match match in matches) {
-                    richTextBox1.AppendText(match.Value.Substring(match.Value.IndexOf('>') + 1, match.Value.LastIndexOf('<') - match.Value.IndexOf('>') - 1) + ", ");
-                    value9.Add(match.Value.Substring(match.Value.IndexOf('>') + 1, match.Value.LastIndexOf('<') - match.Value.IndexOf('>') - 1));
                 }
             }
 
@@ -293,26 +271,49 @@ namespace ParsingSites {
             for (int i = 0; i < year.Count; i++) {
                 excelSheet.Rows[i + 2].Columns[1] = year[i];
                 excelSheet.Rows[i + 2].Columns[2] = value[i];
-                excelSheet.Rows[i + 2].Columns[3] = year1[i];
-                excelSheet.Rows[i + 2].Columns[4] = year1[i];
-                excelSheet.Rows[i + 2].Columns[5] = value2[i];
-                excelSheet.Rows[i + 2].Columns[6] = year3[i];
-                excelSheet.Rows[i + 2].Columns[7] = value3[i];
-                excelSheet.Rows[i + 2].Columns[8] = year4[i];
-                excelSheet.Rows[i + 2].Columns[9] = value4[i];
-                excelSheet.Rows[i + 2].Columns[10] = year5[i];
-                excelSheet.Rows[i + 2].Columns[11] = value5[i];
-                excelSheet.Rows[i + 2].Columns[12] = year6[i];
-                excelSheet.Rows[i + 2].Columns[13] = value6[i];
-                excelSheet.Rows[i + 2].Columns[14] = year7[i];
-                excelSheet.Rows[i + 2].Columns[15] = value7[i];
-                excelSheet.Rows[i + 2].Columns[16] = year8[i];
-                excelSheet.Rows[i + 2].Columns[17] = value8[i];
-                excelSheet.Rows[i + 2].Columns[18] = year9[i];
-                excelSheet.Rows[i + 2].Columns[19] = value9[i];
             }
 
-            excelCellrange = excelSheet.Range[excelSheet.Cells[1, 1], excelSheet.Cells[year.Count + 1, 19]];
+            for (int i = 0; i < year1.Count; i++) {
+                excelSheet.Rows[i + 2].Columns[3] = year1[i];
+                excelSheet.Rows[i + 2].Columns[4] = value1[i];
+            }
+
+            for (int i = 0; i < year2.Count; i++) {
+                excelSheet.Rows[i + 2].Columns[5] = year2[i];
+                excelSheet.Rows[i + 2].Columns[6] = value2[i];
+            }
+
+            for (int i = 0; i < year3.Count; i++) {
+                excelSheet.Rows[i + 2].Columns[7] = year3[i];
+                excelSheet.Rows[i + 2].Columns[8] = value3[i];
+            }
+
+            for (int i = 0; i < year4.Count; i++) {
+                excelSheet.Rows[i + 2].Columns[9] = year4[i];
+                excelSheet.Rows[i + 2].Columns[10] = value4[i];
+            }
+
+            for (int i = 0; i < year5.Count; i++) {
+                excelSheet.Rows[i + 2].Columns[11] = year5[i];
+                excelSheet.Rows[i + 2].Columns[12] = value5[i];
+            }
+
+            for (int i = 0; i < year.Count; i++) {
+                excelSheet.Rows[i + 2].Columns[13] = year6[i];
+                excelSheet.Rows[i + 2].Columns[14] = value6[i];
+            }
+
+            for (int i = 0; i < year7.Count; i++) {
+                excelSheet.Rows[i + 2].Columns[15] = year7[i];
+                excelSheet.Rows[i + 2].Columns[16] = value7[i];
+            }
+
+            for (int i = 0; i < year8.Count; i++) {
+                excelSheet.Rows[i + 2].Columns[17] = year8[i];
+                excelSheet.Rows[i + 2].Columns[18] = value8[i];
+            }
+
+            excelCellrange = excelSheet.Range[excelSheet.Cells[1, 1], excelSheet.Cells[year.Count + 1, 18]];
             excelCellrange.EntireColumn.AutoFit();
             Borders border = excelCellrange.Borders;
             border.LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
