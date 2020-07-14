@@ -197,7 +197,7 @@ namespace ParsingSites {
             }
             List<string> year7 = new List<string>();
             List<string> value7 = new List<string>();
-            /*string table7 = ans.Substring(ans.IndexOf("<table"), ans.IndexOf("</table>") - ans.IndexOf("<table"));
+            string table7 = ans.Substring(ans.IndexOf("<table"), ans.IndexOf("</table>") - ans.IndexOf("<table"));
 
             matches = regex1.Matches(table7);
             if (matches.Count > 0) {
@@ -212,7 +212,7 @@ namespace ParsingSites {
                     richTextBox1.AppendText(match.Value.Substring(match.Value.IndexOf('>') + 1, match.Value.LastIndexOf('<') - match.Value.IndexOf('>') - 1) + ", ");
                     value7.Add(match.Value.Substring(match.Value.IndexOf('>') + 1, match.Value.LastIndexOf('<') - match.Value.IndexOf('>') - 1));
                 }
-            }*/
+            }
 
             using (WebClient wc = new WebClient { Encoding = Encoding.UTF8 }) {
                 ans = wc.DownloadString("https://knoema.ru/atlas/" + country + "/Доля-городского-насления");
